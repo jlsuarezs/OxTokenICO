@@ -9,7 +9,6 @@ import '../installed_contracts/zeppelin/contracts/SafeMath.sol';
 import '../installed_contracts/zeppelin/contracts/token/StandardToken.sol';
 import '../installed_contracts/zeppelin/contracts/token/LimitedTransferToken.sol';
 import '../installed_contracts/zeppelin/contracts/ownership/Ownable.sol';
-import '../installed_contracts/zeppelin/contracts/lifecycle/Destructible.sol';
 
 contract OxToken is StandardToken, LimitedTransferToken, Ownable {
   using SafeMath for uint;
@@ -17,7 +16,7 @@ contract OxToken is StandardToken, LimitedTransferToken, Ownable {
   event OxTokenInitialized(address _owner);
   event InitialTokensAllocated(uint _amount);
   event OwnerTokensAllocated(uint _amount);
-  event SaleStarted(uint _saleEndTime);
+  event SaleStarted(uint _saleStartime);
 
   string public name = "OxToken";
   string public symbol = "OX";
@@ -141,10 +140,10 @@ contract OxToken is StandardToken, LimitedTransferToken, Ownable {
     ownerTokensAllocated = true;
 
     uint amountToAllocate = SafeMath.add(BOUNTY_SUPPLY, TEAM_SUPPLY);
-    balances[msg.sender] = balances[msg.sender].add(amountToAllocate);
+    balances[owner] = balances[owner].add(amountToAllocate);
     totalSupply = totalSupply.add(amountToAllocate);
 
-    Transfer(0x0, msg.sender, amountToAllocate);
+    Transfer(0x0, owner, amountToAllocate);
     OwnerTokensAllocated(amountToAllocate);
 
   }
